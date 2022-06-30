@@ -46,8 +46,8 @@ export default function Home() {
         const estados50 = ['AC', 'AM', 'RO', 'RR', 'AP', 'PA', 'TO']
 
         const valor5 = estados5.some(element => element === estado)
-        const achou15 = estados15.some(element => element === estado)
-        const achou50 = estados50.some(element => element === estado)
+        const valor15 = estados15.some(element => element === estado)
+        const valor50 = estados50.some(element => element === estado)
 
         if (peso <= 0) {
             setErroPeso(true)
@@ -74,7 +74,7 @@ export default function Home() {
             }
         }
 
-        if (achou15) {
+        if (valor15) {
             if (peso >= 0 && peso <= 10) {
                 const taxaPeso = peso * 0.80
                 const taxaEstado = taxaPeso * 15
@@ -95,7 +95,7 @@ export default function Home() {
             }
         }
 
-        if (achou50) {
+        if (valor50) {
             if (peso >= 0 && peso <= 10) {
                 const taxaPeso = peso * 0.80
                 const taxaEstado = taxaPeso * 50
