@@ -73,7 +73,6 @@ export default function Home() {
                 setValorFrete(resultadoFrete)
             }
         }
-
         if (valor15) {
             if (peso >= 0 && peso <= 10) {
                 const taxaPeso = peso * 0.80
@@ -89,12 +88,11 @@ export default function Home() {
             }
             else if (peso > 20) {
                 const taxaPeso = peso * 2.10
-                const taxaEstado = taxaPeso * 50
+                const taxaEstado = taxaPeso * 15
                 const resultadoFrete = taxaPeso + taxaEstado
                 setValorFrete(resultadoFrete)
             }
         }
-
         if (valor50) {
             if (peso >= 0 && peso <= 10) {
                 const taxaPeso = peso * 0.80
