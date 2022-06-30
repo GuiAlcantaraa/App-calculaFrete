@@ -13,27 +13,29 @@ export default function Home() {
 
     const [cepUser, setCepUser] = useState('')
     const [endereco, setEndereco] = useState([])
+
     const [peso, setPeso] = useState(0)
     const [erroCep, setErrocep] = useState(false)
+
     const [erroPeso, setErroPeso] = useState(false)
     const [visible, setVisible] = useState(false)
     const [valorFrete, setValorFrete] = useState(0)
 
 
     async function buscarCep() {
+        const numeroCep = cepUser
+
         try {
-            if (cepUser === '') {
-                setErrocep('Informe um cep.')
-                return;
+            if (numeroCep !== '') {
+                const { data } = await api.get(`/${numeroCep}/json`)
+                setEndereco(data)
+                setVisible(true)
+                setErrocep(false)
             }
             else {
-                const meuCep = cepUser
-                const { data } = await api.get(`/${meuCep}/json`)
-                setEndereco(data)
-                setErrocep(false)
-                setVisible(true)
-
+                setErrocep(true)
             }
+
         } catch (erro) {
             alert(`Informe um cep valido `)
         }
@@ -120,7 +122,6 @@ export default function Home() {
         setVisible(false)
 
     }
-
 
     return (
 
