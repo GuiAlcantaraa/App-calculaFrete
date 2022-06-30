@@ -120,18 +120,18 @@ export default function Home() {
     function novoFrete() {
         setCepUser('')
         setVisible(false)
-
+        setValorFrete(0)
     }
 
     return (
 
         <Container>
-            <Title>Calcular frete</Title>
+            <Title>Transportadora Ze ruela 🤖🤖</Title>
             <StatusBar style='auto' />
 
             <Input
                 placeholder='Informe o cep'
-                placeholderTextColor="#ffffff"
+                placeholderTextColor="#000000"
                 onChangeText={setCepUser}
             />
             {erroCep ? <TextErro>Informe o cep</TextErro> : null}
@@ -151,21 +151,21 @@ export default function Home() {
 
                     <Input
                         placeholder='Informe o peso do produto'
-                        placeholderTextColor="#ffffff"
+                        placeholderTextColor="#000000"
                         onChangeText={setPeso}
                     />
 
                     {erroPeso ? <TextErro>Informe peso maior que 0</TextErro> : null}
 
                     <Button
-                        description="calcular frete"
+                        description="Calcular frete"
                         onPress={calcularFrete}
                     />
 
                     <ResultadoFrete>Valor do frete: R${valorFrete.toFixed(2)}</ResultadoFrete>
 
                     <Button
-                        description="novo frete"
+                        description="Novo frete"
                         onPress={novoFrete}
                     />
                 </View>

@@ -1,14 +1,14 @@
 import styled from "styled-components/native";
 
 export const Container = styled.View`
-        background: #000000;
+        background: #F5DEB3;
         flex: 1;
 `;
 export const Title = styled.Text`
 
         text-align: center;
-        margin-top: 40px ;
-        color: white;
+        margin-top: 90px ;
+        color: black;
         font-size:24px;
         font-weight:bold ;
 
@@ -20,21 +20,24 @@ margin-left: 20px;
 `
 export const Input = styled.TextInput`
 
-        background-color: #1f1e25;
+        background-color: #ffff;
         font-size: 18px;
         padding: 15px;
         margin-top: 45px;
         border-radius: 50px;
         margin-left: 20px;
         margin-right: 20px;
-        color: white;
+        border: 2px
+        border-color: #FFA500;
+        
 `;
 
 export const ResultadoFrete = styled.Text`
-color: green;
+color: black;
 text-align: left;
 margin-left: 20px;
 margin-top: 20px;
 font-size: 20px;
+font-weight: bold;
 
 `
