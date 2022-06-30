@@ -29,15 +29,9 @@ export const Input = styled.TextInput`
         margin-right: 20px;
         color: white;
 `;
-export const ResultadoText = styled.Text`
-        font-size: 20px ;
-        font-weight: bold;
-        color: #000;
-        margin-left: 15px;
-        margin-top: 15px;
-`
+
 export const ResultadoFrete = styled.Text`
-color: white;
+color: green;
 text-align: left;
 margin-left: 20px;
 margin-top: 20px;

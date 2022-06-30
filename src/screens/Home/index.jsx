@@ -2,7 +2,9 @@ import { Container, Title, Input, TextErro, ResultadoFrete } from './styles';
 import { Button } from '../../components/Button'
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { View } from 'react-native'
+import { View } from 'react-native';
+import { Resultado } from '../../components/Resultado';
+
 
 import api from '../../services/api'
 
@@ -10,7 +12,7 @@ export default function Home() {
 
 
     const [cepUser, setCepUser] = useState('')
-    const [cep, setCep] = useState([])
+    const [endereco, setEndereco] = useState([])
     const [peso, setPeso] = useState(0)
     const [erroCep, setErrocep] = useState(false)
     const [erroPeso, setErroPeso] = useState(false)
@@ -19,27 +21,26 @@ export default function Home() {
 
 
     async function buscarCep() {
+        try {
+            if (cepUser === '') {
+                setErrocep('Informe um cep.')
+                return;
+            }
+            else {
+                const meuCep = cepUser
+                const { data } = await api.get(`/${meuCep}/json`)
+                setEndereco(data)
+                setErrocep(false)
+                setVisible(true)
 
-        if (cepUser === '') {
-            setErrocep('Informe um cep.')
-            return;
+            }
+        } catch (erro) {
+            alert(`Informe um cep valido `)
         }
-        else {
-            const meuCep = cepUser
-            const { data } = await api.get(`/${meuCep}/json`)
-                .catch(erro => alert(`Informe um cep valido ${erro}`))
-
-            setCep(data)
-            setErrocep(false)
-            setVisible(true)
-
-        }
-
     }
     function calcularFrete() {
 
-        const estado = cep.uf
-        console.log(estado)
+        const estado = endereco.uf
 
         const estados5 = ['MG', 'SP', 'RJ', 'ES']
         const estados15 = ['PR', 'SC', 'RS']
@@ -138,23 +139,28 @@ export default function Home() {
                 description="Buscar"
                 onPress={buscarCep}
             />
+
             {visible ?
                 <View>
-                    <ResultadoFrete>Logradouro: {cep.logradouro}</ResultadoFrete>
-                    <ResultadoFrete>Cidade: {cep.localidade}</ResultadoFrete>
-                    <ResultadoFrete>Bairro: {cep.bairro}</ResultadoFrete>
+                    <Resultado
+                        logradouro={endereco.logradouro}
+                        cidade={endereco.localidade}
+                        bairro={endereco.bairro}
+                    />
 
                     <Input
                         placeholder='Informe o peso do produto'
                         placeholderTextColor="#ffffff"
                         onChangeText={setPeso}
                     />
+
                     {erroPeso ? <TextErro>Informe peso maior que 0</TextErro> : null}
 
                     <Button
                         description="calcular frete"
                         onPress={calcularFrete}
                     />
+
                     <ResultadoFrete>Valor do frete: R${valorFrete.toFixed(2)}</ResultadoFrete>
 
                     <Button
