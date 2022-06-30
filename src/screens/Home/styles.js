@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 
 export const Container = styled.View`
-        background: black;
+        background: #000000;
 
         flex: 1;
 `;
@@ -31,14 +31,14 @@ export const Input = styled.TextInput`
         color: white;
 `;
 export const ResultadoText = styled.Text`
-        font-size: 18px ;
+        font-size: 20px ;
         font-weight: bold;
         color: #000;
         margin-left: 15px;
         margin-top: 15px;
 `
 export const ResultadoFrete = styled.Text`
-color: red;
+color: white;
 text-align: left;
 margin-left: 20px;
 margin-top: 20px;

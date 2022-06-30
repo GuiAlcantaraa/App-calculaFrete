@@ -10,26 +10,24 @@ export default function Home() {
 
 
     const [cepUser, setCepUser] = useState('')
-    const [cep, setCep] = useState()
-
+    const [cep, setCep] = useState([])
     const [peso, setPeso] = useState(0)
-
     const [erroCep, setErrocep] = useState(false)
+    const [erroPeso, setErroPeso] = useState(false)
     const [visible, setVisible] = useState(false)
-
     const [valorFrete, setValorFrete] = useState(0)
+
 
     async function buscarCep() {
 
-        console.log(cepUser)
         if (cepUser === '') {
             setErrocep('Informe um cep.')
             return;
         }
         else {
-
             const meuCep = cepUser
-            const { data } = await api.get(`/${meuCep}/json`);
+            const { data } = await api.get(`/${meuCep}/json`)
+                .catch(erro => alert(`Informe um cep valido ${erro}`))
 
             setCep(data)
             setErrocep(false)
@@ -38,7 +36,6 @@ export default function Home() {
         }
 
     }
-
     function calcularFrete() {
 
         const estado = cep.uf
@@ -50,7 +47,12 @@ export default function Home() {
 
         const valor5 = estados5.some(element => element === estado)
         const achou15 = estados15.some(element => element === estado)
+        const achou50 = estados50.some(element => element === estado)
 
+        if (peso <= 0) {
+            setErroPeso(true)
+            return;
+        }
         if (valor5) {
             if (peso >= 0 && peso <= 10) {
                 const taxaPeso = peso * 0.80
@@ -87,15 +89,38 @@ export default function Home() {
             }
             else if (peso > 20) {
                 const taxaPeso = peso * 2.10
-                const taxaEstado = taxaPeso * 15
+                const taxaEstado = taxaPeso * 50
                 const resultadoFrete = taxaPeso + taxaEstado
                 setValorFrete(resultadoFrete)
             }
         }
 
+        if (achou50) {
+            if (peso >= 0 && peso <= 10) {
+                const taxaPeso = peso * 0.80
+                const taxaEstado = taxaPeso * 50
+                const resultadoFrete = taxaPeso + taxaEstado
+                setValorFrete(resultadoFrete)
+            }
+            else if (peso > 10.1 && peso <= 20) {
+                const taxaPeso = peso * 0.96
+                const taxaEstado = taxaPeso * 50
+                const resultadoFrete = taxaPeso + taxaEstado
+                setValorFrete(resultadoFrete)
+            }
+            else if (peso > 20) {
+                const taxaPeso = peso * 2.10
+                const taxaEstado = taxaPeso * 50
+                const resultadoFrete = taxaPeso + taxaEstado
+                setValorFrete(resultadoFrete)
+            }
+        }
+    }
+    function novoFrete() {
+        setCepUser('')
+        setVisible(false)
 
     }
-
 
 
     return (
@@ -115,13 +140,7 @@ export default function Home() {
                 description="Buscar"
                 onPress={buscarCep}
             />
-
-
-
-
-
             {visible ?
-
                 <View>
                     <ResultadoFrete>Logradouro: {cep.logradouro}</ResultadoFrete>
                     <ResultadoFrete>Cidade: {cep.localidade}</ResultadoFrete>
@@ -132,14 +151,19 @@ export default function Home() {
                         placeholderTextColor="#ffffff"
                         onChangeText={setPeso}
                     />
+                    {erroPeso ? <TextErro>Informe peso maior que 0</TextErro> : null}
 
                     <Button
                         description="calcular frete"
                         onPress={calcularFrete}
                     />
                     <ResultadoFrete>Valor do frete: R${valorFrete.toFixed(2)}</ResultadoFrete>
-                </View>
 
+                    <Button
+                        description="novo frete"
+                        onPress={novoFrete}
+                    />
+                </View>
                 : null}
 
 
